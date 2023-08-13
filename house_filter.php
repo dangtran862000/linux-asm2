@@ -117,18 +117,54 @@ $status = isset($_SESSION['status']) ? $_SESSION['status'] : "";
       </div>
       <div class="sale_container">
       <?php
-        // Retrieve property entries
-        $query_house = "SELECT * FROM houses_for_sale";
-        $result_house = mysqli_query($conn, $query_house);
+        if (isset($_POST['search'])) {
+            $location = $_POST['location'];
+            $category = $_POST['category'];
+            if (($category == "") and ($location != "")) {
+                // Retrieve property entries
+                $query_house = "SELECT * FROM houses_for_sale WHERE location_house='$location'";
+            } elseif (($category != "") and ($location == "")) {
+                $query_house = "SELECT * FROM houses_for_sale WHERE category='$category'";  
+            } elseif (($category != "") and ($location != "")) {
+                $query_house = "SELECT * FROM houses_for_sale WHERE location_house='$location' AND category='$category'";
+            } elseif (($category == "") and ($location == "")) {
+                $query_house = "SELECT * FROM houses_for_sale";
+            }
+            
+            $result_house = mysqli_query($conn, $query_house);
 
-        $propertyData = array(); // Initialize an array to store property data
-
-        if (mysqli_num_rows($result_house) > 0) {
-            while ($row_house = mysqli_fetch_assoc($result_house)) {
-                $propertyData[] = $row_house;
+            $propertyData = array(); // Initialize an array to store property data
+            
+            if (mysqli_num_rows($result_house) > 0) {
+                while ($row_house = mysqli_fetch_assoc($result_house)) {
+                    $propertyData[] = $row_house;
+                }
+            } else {
+                ?> 
+                <div class="box">
+                <div class="img-box">
+                
+                </div>
+                <div class="detail-box">
+                    <h3 style="text-align: center; margin-top: 10%">
+                    SORRY
+                    </h3>
+                    <p style="text-align: center"> 
+                    We can not find any result for you with your search !!!
+                    <br><br>
+                    <a style="text-align: center" href="house.php">
+                    Read More
+                    </a>
+                    </p>
+                    <i style="text-align: center">
+                    </i>
+                    
+                </div>
+                </div>
+                
+                <?php
             }
         }
-
       ?>
       <?php 
       

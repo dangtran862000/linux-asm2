@@ -129,7 +129,7 @@ $status = isset($_SESSION['status']) ? $_SESSION['status'] : "";
                 }
               ?> 
               <p>
-                It is a long established fact that a reader will be distracted by the readable content of
+              Experience the convenience of our online tools, dedicated customer support, and a commitment to delivering exceptional service. Let be your partner in finding the perfect property, turning your real estate aspirations into reality. Explore our listings today and embark on a seamless path towards your new home in beautiful Vietnam.
               </p>
               <div class="btn-box">
                 <a href="" class="">
@@ -147,16 +147,16 @@ $status = isset($_SESSION['status']) ? $_SESSION['status'] : "";
   <!-- find section -->
   <section class="find_section ">
     <div class="container">
-      <form action="">
+      <form action="house_filter.php" method="post">
         <div class=" form-row">
           <div class="col-md-5">
-            <input type="text" class="form-control" placeholder="Serach Your Categories ">
+            <input type="text" class="form-control" placeholder="Search Your Categories" name="category" value="">
           </div>
           <div class="col-md-5">
-            <input type="text" class="form-control" placeholder="Location ">
+            <input type="text" class="form-control" placeholder="Location " name="location">
           </div>
           <div class="col-md-2">
-            <button type="submit" class="">
+            <button type="submit" class="" name="search">
               search
             </button>
           </div>
@@ -190,9 +190,7 @@ $status = isset($_SESSION['status']) ? $_SESSION['status'] : "";
               </h2>
             </div>
             <p>
-              There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration
-              in
-              some form, by injected humour, or randomised words
+            Welcome to SAI GON 2 – Your Trusted Real Estate Partner in Vietnam! At SAIGON 2, we're dedicated to helping you find your dream property, whether it's a luxurious beachfront villa, a charming countryside cottage, a modern city apartment, or a serene mountain retreat. Our team of experienced agents is here to guide you through every step of the buying and selling process, providing expert advice, personalized assistance, and a deep understanding of the local real estate market.
             </p>
             <a href="">
               Read More
@@ -214,24 +212,53 @@ $status = isset($_SESSION['status']) ? $_SESSION['status'] : "";
           House For Sale
         </h2>
         <p>
-          There are many variations of passages of Lorem Ipsum available, but the
+          with more detailed information for houses or apartments for sale in Vietnam
         </p>
       </div>
       <div class="sale_container">
+
+      <?php
+        // Retrieve property entries
+        $query_house = "SELECT * FROM houses_for_sale";
+        $result_house = mysqli_query($conn, $query_house);
+
+        $propertyData = array(); // Initialize an array to store property data
+
+        if (mysqli_num_rows($result_house) > 0) {
+            while ($row_house = mysqli_fetch_assoc($result_house)) {
+                $propertyData[] = $row_house;
+            }
+        }
+
+      ?>
+      <?php 
+      
+      for ($j = 0; $j < count($propertyData); $j++): 
+      if ($j < 6) { 
+        ?> 
         <div class="box">
           <div class="img-box">
-            <img src="images/s-1.jpg" alt="">
+          <img src="images/<?php echo $propertyData[$j]['picture_house'];?>" alt="Property Picture"></img>
           </div>
           <div class="detail-box">
             <h6>
-              apertments house
+              <?php echo $propertyData[$j]['house_name']; ?>
             </h6>
             <p>
-              There are many variations of passages of Lorem Ipsum available, but
+              <?php echo $propertyData[$j]['description']; ?>            
             </p>
+            <i>
+              Address: <?php echo $propertyData[$j]['address']; ?>            
+            </i>
           </div>
         </div>
-        <div class="box">
+        <?php
+      }?>
+        
+      <?php endfor; ?>
+
+        
+        <!-- <div class="box">
           <div class="img-box">
             <img src="images/s-2.jpg" alt="">
           </div>
@@ -295,10 +322,10 @@ $status = isset($_SESSION['status']) ? $_SESSION['status'] : "";
               There are many variations of passages of Lorem Ipsum available, but
             </p>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="btn-box">
-        <a href="">
+        <a href="house.php">
           Find More
         </a>
       </div>
@@ -316,8 +343,9 @@ $status = isset($_SESSION['status']) ? $_SESSION['status'] : "";
           Our Pricing
         </h2>
         <p>
-          There are many variations of passages of Lorem Ipsum available, but the
-        </p>
+        We specialize in offering a wide range of properties to suit every price point, ensuring that you can explore options that align with your financial goals. Whether you're looking for an exclusive luxury villa, a cozy apartment, a charming suburban house, or an investment opportunity, we have properties that cater to various budgets.
+
+</p>
       </div>
       <div class="price_container">
         <div class="box">
@@ -464,9 +492,7 @@ $status = isset($_SESSION['status']) ? $_SESSION['status'] : "";
               </h2>
             </div>
             <p>
-              There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration
-              in
-              some form, by injected humour, or randomised words which don't look even slightly believable.
+            With an extensive portfolio of properties across Vietnam, we offer a diverse range of options to suit your preferences and lifestyle. Our user-friendly website makes it easy to explore our listings, view detailed property information, and visualize your future home through captivating images. Whether you're a first-time homebuyer, an investor, or looking for your next upgrade, we're here to make your real estate journey smooth, transparent, and enjoyable.
             </p>
             <a href="">
               Get A Quote
